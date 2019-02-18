@@ -1,2 +1,2 @@
-# migration
+# mysql-migrate
 
