@@ -1,4 +1,4 @@
-module mysql-migrate
+module github.com/pickjunk/mysql-migrate
 
 require (
 	github.com/Microsoft/go-winio v0.4.11 // indirect
