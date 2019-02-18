@@ -1,0 +1,12 @@
+migrations: migrations
+
+mysql:
+  dsn: "root:123456@/app-platform?charset=utf8mb4"
+
+root:
+  table: "admin"
+  name: "root"
+  passwd: "123456"
+  ctime: now
+  mtime: now
+  app_id: 0
