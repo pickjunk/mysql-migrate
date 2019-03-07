@@ -6,7 +6,7 @@ require (
 	github.com/docker/docker v1.13.1 // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.3.3 // indirect
-	github.com/mattes/migrate v3.0.1+incompatible
+	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/pickjunk/bgo v0.0.0-20190218153933-3620feaf5c25
 	go.uber.org/atomic v1.3.2 // indirect

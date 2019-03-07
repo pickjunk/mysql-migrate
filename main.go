@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"time"
 
-	migrate "github.com/mattes/migrate"
-	_ "github.com/mattes/migrate/database/mysql"
-	_ "github.com/mattes/migrate/source/file"
+	migrate "github.com/golang-migrate/migrate"
+	_ "github.com/golang-migrate/migrate/database/mysql"
+	_ "github.com/golang-migrate/migrate/source/file"
 	bgo "github.com/pickjunk/bgo"
 	dbr "github.com/pickjunk/bgo/dbr"
 	bgoTime "github.com/pickjunk/bgo/time"
@@ -29,10 +29,7 @@ func runMigrate(c *cli.Context, callback func(m *migrate.Migrate)) (uint, uint) 
 		panic(err)
 	}
 
-	oldVersion, _, err := m.Version()
-	if err != nil {
-		panic(err)
-	}
+	oldVersion, _, _ := m.Version()
 
 	callback(m)
 
