@@ -52,6 +52,10 @@ github.com/opentracing/opentracing-go v1.0.2 h1:3jA2P6O1F9UOrWVpwrIo17pu01KWvNWg
 github.com/opentracing/opentracing-go v1.0.2/go.mod h1:UkNAQd3GIcIGf0SeVgPpRdFStlNbqXla1AfSYxPUl2o=
 github.com/pickjunk/bgo v0.0.0-20190218153933-3620feaf5c25 h1:DCe6gH6oKXunssjFY2uYMWyXj6F9MmnbNlqWitC2Kes=
 github.com/pickjunk/bgo v0.0.0-20190218153933-3620feaf5c25/go.mod h1:2XB+GfkZkaI8WdzjHxYqgwxG+cUudg21mZp5oZTxTIk=
+github.com/pickjunk/bgo v0.0.0-20190308101705-2d2a9ebd79fa h1:gILHbdvgvGwDk1kFPXE8hjVRL02EHZWITc2oJ0ZTLEI=
+github.com/pickjunk/bgo v0.0.0-20190308101705-2d2a9ebd79fa/go.mod h1:GF0vhUqm67lir2ypsHvvs0TL53DrXPWPiG9+dW1p5L4=
+github.com/pickjunk/bgo v0.9.0 h1:j3p+cBjQksn28pabq8PoUlvtVklM2A4dhF+pHCwcBA8=
+github.com/pickjunk/bgo v0.9.0/go.mod h1:GF0vhUqm67lir2ypsHvvs0TL53DrXPWPiG9+dW1p5L4=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
