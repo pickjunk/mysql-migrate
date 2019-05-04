@@ -11,7 +11,6 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 	bgo "github.com/pickjunk/bgo"
 	dbr "github.com/pickjunk/bgo/dbr"
-	bgoTime "github.com/pickjunk/bgo/time"
 	bcrypt "golang.org/x/crypto/bcrypt"
 	cli "gopkg.in/urfave/cli.v1"
 )
@@ -145,8 +144,7 @@ func Root(c *cli.Context) error {
 	}
 	password := string(hash)
 
-	t := time.Now()
-	now := bgoTime.DateTime(&t)
+	now := time.Now().Unix()
 
 	skip := []string{"table", "name", "passwd"}
 	keys := []string{"name", "passwd"}
