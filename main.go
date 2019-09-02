@@ -9,23 +9,33 @@ import (
 	migrate "github.com/golang-migrate/migrate"
 	_ "github.com/golang-migrate/migrate/database/mysql"
 	_ "github.com/golang-migrate/migrate/source/file"
-	bgo "github.com/pickjunk/bgo"
+	b "github.com/pickjunk/bgo"
 	dbr "github.com/pickjunk/bgo/dbr"
 	bcrypt "golang.org/x/crypto/bcrypt"
 	cli "gopkg.in/urfave/cli.v1"
 )
 
-func runMigrate(c *cli.Context, callback func(m *migrate.Migrate)) (uint, uint) {
-	dir, ok := bgo.Config["migrations"].(string)
-	if !ok {
+var (
+	dir string
+	dsn string
+)
+
+func init() {
+	dir = b.Config.Get("migrations").String()
+	if dir == "" {
 		dir = "migrations"
 	}
-	mysql := bgo.Config["mysql"].(map[interface{}]interface{})
-	dsn := mysql["dsn"].(string)
 
+	dsn := b.Config.Get("mysql.dsn").String()
+	if dsn == "" {
+		dsn = "localhost:3306"
+	}
+}
+
+func runMigrate(c *cli.Context, callback func(m *migrate.Migrate)) (uint, uint) {
 	m, err := migrate.New("file://"+dir, "mysql://"+dsn)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
 
 	oldVersion, _, _ := m.Version()
@@ -34,7 +44,7 @@ func runMigrate(c *cli.Context, callback func(m *migrate.Migrate)) (uint, uint) 
 
 	newVersion, _, err := m.Version()
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
 
 	return oldVersion, newVersion
@@ -46,7 +56,6 @@ func MigrateCreate(c *cli.Context) error {
 		cli.ShowCommandHelpAndExit(c, "create", 0)
 	}
 
-	dir := bgo.Config["migrations"].(string)
 	timestamp := time.Now().Unix()
 	base := fmt.Sprintf("%v/%v_%v.", dir, timestamp, c.Args().First())
 
@@ -54,15 +63,15 @@ func MigrateCreate(c *cli.Context) error {
 
 	upFile := base + "up.sql"
 	if _, err := os.Create(upFile); err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
-	bgo.Log.WithField("name", upFile).Info("migrate create")
+	log.Info().Str("name", upFile).Msg("migrate create")
 
 	downFile := base + "down.sql"
 	if _, err := os.Create(base + "down.sql"); err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
-	bgo.Log.WithField("name", downFile).Info("migrate create")
+	log.Info().Str("name", downFile).Msg("migrate create")
 
 	return nil
 }
@@ -73,12 +82,12 @@ func MigrateUp(c *cli.Context) error {
 		err := m.Up()
 		if err != nil {
 			if err.Error() != "no change" {
-				panic(err)
+				log.Panic().Err(err).Send()
 			}
 		}
 	})
 
-	bgo.Log.WithField("from", o).WithField("to", n).Info("migrate up")
+	log.Info().Uint("from", o).Uint("to", n).Msg("migrate up")
 
 	return nil
 }
@@ -92,17 +101,17 @@ func MigrateRollback(c *cli.Context) error {
 	o, n := runMigrate(c, func(m *migrate.Migrate) {
 		v, err := strconv.Atoi(c.Args().First())
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 		err = m.Migrate(uint(v))
 		if err != nil {
 			if err.Error() != "no change" {
-				panic(err)
+				log.Panic().Err(err).Send()
 			}
 		}
 	})
 
-	bgo.Log.WithField("from", o).WithField("to", n).Info("migrate rollback")
+	log.Info().Uint("from", o).Uint("to", n).Msg("migrate rollback")
 
 	return nil
 }
@@ -116,15 +125,15 @@ func MigrateForce(c *cli.Context) error {
 	o, n := runMigrate(c, func(m *migrate.Migrate) {
 		v, err := strconv.Atoi(c.Args().First())
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 		err = m.Force(v)
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 	})
 
-	bgo.Log.WithField("from", o).WithField("to", n).Info("migrate force")
+	log.Info().Uint("from", o).Uint("to", n).Msg("migrate force")
 
 	return nil
 }
@@ -133,14 +142,14 @@ func MigrateForce(c *cli.Context) error {
 func Root(c *cli.Context) error {
 	conn := dbr.New()
 	db := conn.NewSession(nil)
-	root := bgo.Config["root"].(map[interface{}]interface{})
 
-	table := root["table"].(string)
-	name := root["name"].(string)
-	passwd := root["passwd"].(string)
+	root := b.Config.Get("root").Map()
+	table := b.Config.Get("root.table").String()
+	name := b.Config.Get("root.name").String()
+	passwd := b.Config.Get("root.passwd").String()
 	hash, err := bcrypt.GenerateFromPassword([]byte(passwd), 10)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
 	password := string(hash)
 
@@ -150,10 +159,9 @@ func Root(c *cli.Context) error {
 	keys := []string{"name", "passwd"}
 	values := []interface{}{name, password}
 	for k, v := range root {
-		key := k.(string)
 		shouldSkip := false
 		for _, kk := range skip {
-			if key == kk {
+			if k == kk {
 				shouldSkip = true
 				break
 			}
@@ -162,11 +170,12 @@ func Root(c *cli.Context) error {
 			continue
 		}
 
-		keys = append(keys, key)
-		if value, ok := v.(string); ok && value == "now" {
-			v = now
+		keys = append(keys, k)
+		if value := v.String(); value == "now" {
+			values = append(values, now)
+		} else {
+			values = append(values, v.Value())
 		}
-		values = append(values, v)
 	}
 
 	var exist struct{}
@@ -180,12 +189,12 @@ func Root(c *cli.Context) error {
 			Values(values...).
 			Exec()
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 
 		id, err := r.LastInsertId()
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 
 		_, err = db.Update(table).
@@ -193,10 +202,10 @@ func Root(c *cli.Context) error {
 			Set("id", 1).
 			Exec()
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 
-		bgo.Log.Info("root insert success")
+		log.Info().Msg("root insert success")
 	} else {
 		builder := db.Update(table).
 			Where("id = ?", 1)
@@ -206,10 +215,10 @@ func Root(c *cli.Context) error {
 
 		_, err = builder.Exec()
 		if err != nil {
-			panic(err)
+			log.Panic().Err(err).Send()
 		}
 
-		bgo.Log.Info("root update success")
+		log.Info().Msg("root update success")
 	}
 
 	return nil
@@ -259,6 +268,6 @@ func main() {
 
 	err := app.Run(os.Args)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Send()
 	}
 }
