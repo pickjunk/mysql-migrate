@@ -26,7 +26,7 @@ func init() {
 		dir = "migrations"
 	}
 
-	dsn := bc.Get("mysql.dsn").String()
+	dsn = bc.Get("mysql.dsn").String()
 	if dsn == "" {
 		dsn = "localhost:3306"
 	}
