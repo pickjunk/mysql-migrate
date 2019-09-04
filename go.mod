@@ -13,7 +13,7 @@ require (
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lib/pq v1.1.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
-	github.com/pickjunk/bgo v0.19.4
+	github.com/pickjunk/bgo v0.22.0
 	github.com/uber-go/atomic v1.4.0 // indirect
 	github.com/uber/jaeger-client-go v2.16.0+incompatible // indirect
 	go.uber.org/atomic v1.4.0 // indirect
