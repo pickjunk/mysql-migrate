@@ -9,7 +9,7 @@ import (
 	migrate "github.com/golang-migrate/migrate"
 	_ "github.com/golang-migrate/migrate/database/mysql"
 	_ "github.com/golang-migrate/migrate/source/file"
-	b "github.com/pickjunk/bgo"
+	bc "github.com/pickjunk/bgo/config"
 	dbr "github.com/pickjunk/bgo/dbr"
 	bcrypt "golang.org/x/crypto/bcrypt"
 	cli "gopkg.in/urfave/cli.v1"
@@ -21,12 +21,12 @@ var (
 )
 
 func init() {
-	dir = b.Config.Get("migrations").String()
+	dir = bc.Get("migrations").String()
 	if dir == "" {
 		dir = "migrations"
 	}
 
-	dsn := b.Config.Get("mysql.dsn").String()
+	dsn := bc.Get("mysql.dsn").String()
 	if dsn == "" {
 		dsn = "localhost:3306"
 	}
@@ -143,10 +143,10 @@ func Root(c *cli.Context) error {
 	conn := dbr.New()
 	db := conn.NewSession(nil)
 
-	root := b.Config.Get("root").Map()
-	table := b.Config.Get("root.table").String()
-	name := b.Config.Get("root.name").String()
-	passwd := b.Config.Get("root.passwd").String()
+	root := bc.Get("root").Map()
+	table := bc.Get("root.table").String()
+	name := bc.Get("root.name").String()
+	passwd := bc.Get("root.passwd").String()
 	hash, err := bcrypt.GenerateFromPassword([]byte(passwd), 10)
 	if err != nil {
 		log.Panic().Err(err).Send()
