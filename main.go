@@ -33,6 +33,8 @@ func init() {
 }
 
 func runMigrate(c *cli.Context, callback func(m *migrate.Migrate)) (uint, uint) {
+	log.Info().Str("dir", dir).Str("dsn", dsn).Send()
+
 	m, err := migrate.New("file://"+dir, "mysql://"+dsn)
 	if err != nil {
 		log.Panic().Err(err).Send()
