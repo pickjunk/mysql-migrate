@@ -23,6 +23,7 @@ github.com/docker/go-units v0.3.3 h1:Xk8S3Xj5sLGlG5g67hJmYMmUgXv5N4PhkjJHHqrwnTk
 github.com/docker/go-units v0.3.3/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/elazarl/go-bindata-assetfs v1.0.0 h1:G/bYguwHIzWq9ZoyUQqrjTmJbbYn3j3CKKpKinvZLFk=
 github.com/elazarl/go-bindata-assetfs v1.0.0/go.mod h1:v+YaWX3bdea5J/mo8dSETolEo7R71Vk1u8bnjau5yw4=
+github.com/fatih/structs v1.1.0/go.mod h1:9NiDSp5zOcgEDl+j00MP/WkGVPOlPRLejGD8Ga6PJ7M=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/go-mail/mail v2.3.1+incompatible/go.mod h1:VPWjmmNyRsWXQZHVHT3g0YbIINUkSmuKOiLIDkWbL6M=
@@ -68,6 +69,8 @@ github.com/pickjunk/bgo v0.19.4 h1:V0qa2KJFIrZDQsjPtH+djqcxbqyQqLOwIkuC1LbPi9o=
 github.com/pickjunk/bgo v0.19.4/go.mod h1:RI3wncfHVfFfcCdMWnPA4X7YOgomoBUQOR28D06V78I=
 github.com/pickjunk/bgo v0.22.0 h1:xyfRVmgXhb+T54/PEqjUFYB7spxrQ1SBW6999kTj0Vk=
 github.com/pickjunk/bgo v0.22.0/go.mod h1:RI3wncfHVfFfcCdMWnPA4X7YOgomoBUQOR28D06V78I=
+github.com/pickjunk/bgo v0.23.0 h1:C3d4efPj3eyatPaDO8vY/7fiMncbH0WeftcGS6XNqns=
+github.com/pickjunk/bgo v0.23.0/go.mod h1:A9kGcEAFOriNVuV5Kt8r1MXDehfB35WLzQfihBp22hU=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
