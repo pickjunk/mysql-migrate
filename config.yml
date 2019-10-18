@@ -1,7 +1,6 @@
-migrations: migrations
-
-mysql:
-  dsn: "root:123456@/app-platform?charset=utf8mb4"
+migrations:
+  dir: migrations
+  dsn: "root:123456@/?charset=utf8mb4"
 
 root:
   table: "admin"

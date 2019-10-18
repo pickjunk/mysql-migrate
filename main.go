@@ -21,12 +21,12 @@ var (
 )
 
 func init() {
-	dir = bc.Get("migrations").String()
+	dir = bc.Get("migrations.dir").String()
 	if dir == "" {
 		dir = "migrations"
 	}
 
-	dsn = bc.Get("mysql.dsn").String()
+	dsn = bc.Get("migrations.dsn").String()
 	if dsn == "" {
 		dsn = "localhost:3306"
 	}
