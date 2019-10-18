@@ -228,6 +228,7 @@ func Root(c *cli.Context) error {
 
 func main() {
 	app := cli.NewApp()
+	app.Version = "0.1.1"
 	app.Name = "mysql-migrate"
 	app.Usage = "mysql migration tool"
 
